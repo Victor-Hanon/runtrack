@@ -26,7 +26,10 @@ function App() {
     setDuree('')
     setDate('')
   }
-
+const handleSupprimer = (indexASupprimer) => {
+  const nouvellesCourses = courses.filter((course, index) => index !== indexASupprimer)
+  setCourses(nouvellesCourses)
+}
   return (
     <div style={{ padding: '20px', maxWidth: '600px' }}>
       <h1>🏃 RunTrack</h1>
@@ -72,6 +75,7 @@ function App() {
         {courses.map((course, index) => (
           <li key={index}>
             {course.date} - {course.distance} km en {course.duree} min
+            <button onClick={() => handleSupprimer(index)}>🗑️</button>
           </li>
         ))}
       </ul>
