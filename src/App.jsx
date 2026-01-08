@@ -1,14 +1,37 @@
 import { useState } from 'react'
 
 function App() {
-  // Trois states pour nos trois informations
+  // States pour le formulaire
   const [distance, setDistance] = useState('')
   const [duree, setDuree] = useState('')
   const [date, setDate] = useState('')
+  
+  // State pour stocker TOUTES les courses (un tableau !)
+  const [courses, setCourses] = useState([])
+
+  // Fonction appelée quand on clique sur "Enregistrer"
+  const handleEnregistrer = () => {
+    // On crée un objet avec les infos de la course
+    const nouvelleCourse = {
+      distance: distance,
+      duree: duree,
+      date: date
+    }
+    
+    // On ajoute cette course au tableau
+    setCourses([...courses, nouvelleCourse])
+    
+    // On vide les champs du formulaire
+    setDistance('')
+    setDuree('')
+    setDate('')
+  }
 
   return (
-    <div style={{ padding: '20px', maxWidth: '500px' }}>
+    <div style={{ padding: '20px', maxWidth: '600px' }}>
       <h1>🏃 RunTrack</h1>
+      
+      <h2>Ajouter une course</h2>
       
       <div style={{ marginBottom: '15px' }}>
         <label>Distance (km) : </label>
@@ -37,12 +60,21 @@ function App() {
         />
       </div>
 
-      <div style={{ padding: '10px', background: '#f0f0f0', borderRadius: '5px' }}>
-        <h3>Aperçu :</h3>
-        <p>Distance : {distance} km</p>
-        <p>Durée : {duree} min</p>
-        <p>Date : {date}</p>
-      </div>
+      <button onClick={handleEnregistrer}>
+        Enregistrer la course
+      </button>
+
+      <hr />
+
+      <h2>Mes courses ({courses.length})</h2>
+      
+      <ul>
+        {courses.map((course, index) => (
+          <li key={index}>
+            {course.date} - {course.distance} km en {course.duree} min
+          </li>
+        ))}
+      </ul>
     </div>
   )
 }
